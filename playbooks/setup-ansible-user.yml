@@ -5,7 +5,7 @@
   - name: Create ansible user and add to root group
     user:
       name: ansible
-      group: admin
+      group: root
   
   - name: Add ansible user to sudoers - Debian/Ubuntu
     copy:
