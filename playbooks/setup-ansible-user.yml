@@ -4,8 +4,8 @@
   tasks:
   - name: Create ansible user and add to root group
     user:
-      name: "ansible"
-      groups: "root"
+      name: ansible
+      group: admin
   
   - name: Add ansible user to sudoers - Debian/Ubuntu
     copy:
