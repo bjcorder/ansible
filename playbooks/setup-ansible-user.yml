@@ -15,7 +15,7 @@
 
   - name: Add ansible user to sudoers - Rocky/RedHat
     copy:
-      dest: "/etc/sudoers
+      dest: "/etc/sudoers"
       content: "ansible   ALL=(ALL)   NOPASSWD:   ALL"
     when: ansible_os_family == "RedHat"
 
