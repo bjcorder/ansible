@@ -15,7 +15,7 @@
   - name: Add authorized keys
     authorized_key:
       user: "ansible"
-      key: "{{ lookup('file', '/home/ansible/.ssh/id_rsa.pub') }}"
+      key: /home/ansible/.ssh/id_rsa.pub
 
   - name: Disable Password Authentication
     lineinfile:
@@ -24,12 +24,15 @@
       line: "PasswordAuthentication no"
       state: present
       backup: yes
-    notify:
-       - restart ssh
 
-
-  handlers:
-  - name: restart ssh
+  - name: "Restart ssh - Debian/Ubuntu"
     service:
       name: ssh
       state: restarted
+    when: ansible_os_family == "Debian"
+
+  - name: "Restart sshd - Rocky/RedHat"
+    service:
+      name: sshd
+      state: restarted
+    when: ansible_os_family == "RedHat"
