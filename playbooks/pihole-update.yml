@@ -1,0 +1,6 @@
+- hosts: "*"
+  become: yes
+  gather_facts: true
+  tasks:
+    - name: Update PiHole
+      ansible.builtin.shell: pihole -up

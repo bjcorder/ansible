@@ -1,0 +1,35 @@
+- hosts: "*"
+  become: yes
+  gather_facts: true
+  tasks:
+  - name: Create ansible user and add to root group
+    user:
+      name: "ansible"
+      groups: "root"
+  
+  - name: Add ansible user to sudoers
+    copy:
+      dest: "/etc/sudoers.d/ansible"
+      content: "ansible   ALL=(ALL)   NOPASSWD:   ALL"
+
+  - name: Add authorized keys
+    authorized_key:
+      user: "ansible"
+      key: "{{ lookup('file', '/home/ansible/.ssh/id_rsa.pub') }}"
+
+  - name: Disable Password Authentication
+    lineinfile:
+      dest: /etc/ssh/sshd_config
+      regexp: '^PasswordAuthentication'
+      line: "PasswordAuthentication no"
+      state: present
+      backup: yes
+    notify:
+       - restart ssh
+
+
+  handlers:
+  - name: restart ssh
+    service:
+      name: ssh
+      state: restarted
