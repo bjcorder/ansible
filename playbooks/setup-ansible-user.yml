@@ -7,15 +7,22 @@
       name: "ansible"
       groups: "root"
   
-  - name: Add ansible user to sudoers
+  - name: Add ansible user to sudoers - Debian/Ubuntu
     copy:
       dest: "/etc/sudoers.d/ansible"
       content: "ansible   ALL=(ALL)   NOPASSWD:   ALL"
+    when: ansible_os_family == "Debian"
+
+  - name: Add ansible user to sudoers - Rocky/RedHat
+    copy:
+      dest: "/etc/sudoers
+      content: "ansible   ALL=(ALL)   NOPASSWD:   ALL"
+    when: ansible_os_family == "RedHat"
 
   - name: Add authorized keys
     authorized_key:
       user: "ansible"
-      key: /home/ansible/.ssh/id_rsa.pub
+      key: "/home/ansible/.ssh/id_rsa.pub"
 
   - name: Disable Password Authentication
     lineinfile:
