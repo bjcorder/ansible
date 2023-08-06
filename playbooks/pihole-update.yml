@@ -1,4 +1,4 @@
-- hosts: "*"
+- hosts: "pihole"
   become: yes
   gather_facts: true
   tasks:
