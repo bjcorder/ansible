@@ -3,6 +3,17 @@
   gather_facts: true
   tasks:
 
+    - name: Install ubuntu-release-upgrader-core package to allow dist-upgrade
+      ansible.builtin.apt:
+        name: ubuntu-release-upgrader-core
+        update_cache: yes
+
+
+    - name: Make sure all packages are updated to latest version
+      ansible.builtin.apt:
+        name: "*"
+        state: latest
+
     - name: Run Ubuntu distribution upgrade to current latest
       shell: do-release-upgrade -f DistUpgradeViewNonInteractive
     
