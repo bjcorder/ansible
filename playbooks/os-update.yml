@@ -12,16 +12,12 @@
       when:
         - ansible_os_family == "RedHat"
 
-    - name: Update package repos - apt
-      ansible.builtin.apt:
-        update_cache: yes
-      when: ansible_os_family == "Debian"
-    
     - name: Upgrade all packages - apt
       ansible.builtin.apt:
-        name: "*"
-        state: latest
+        update_cache: yes
+        upgrade: dist
       when: ansible_os_family == "Debian"
+
   
   ### Check for reboot required; reboot if required
 
