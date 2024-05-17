@@ -1,0 +1,12 @@
+- hosts: "pve-cluster"
+  name: Update Proxmox Cluster
+  gather_facts: true
+  tasks:
+
+  ### Update/upgrade all packages
+  - name: PVE Upgrade (apt-get dist-upgrade)
+    ansible.builtin.apt:
+      update_cache: yes
+      upgrade: dist
+    notify:
+      - reboot server
